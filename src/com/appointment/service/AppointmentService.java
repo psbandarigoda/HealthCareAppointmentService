@@ -2,11 +2,10 @@ package com.appointment.service;
 
 import java.sql.*;
 
-import javax.ws.rs.QueryParam;
-
 import com.appointment.database.DBConnection;
+import com.appointment.model.AppointmentModel;
 
-public class Appointment {
+public class AppointmentService {
 	
 
 	// Insert method which insert data to Appointment table
@@ -138,52 +137,59 @@ public class Appointment {
 	
 	
 	// Get Appointment data by ID
-	public String getAppointmentById(@QueryParam("id") String aId) {
-		String output = "";
+	public AppointmentModel getAppointmentById(String aId) {
+		
+		AppointmentModel appointment = new AppointmentModel();
+		
 		try {
-			Connection con = DBConnection.connect();
-			if (con == null) {
-				return "Error while connecting to the database for reading.";
-			}
-						 
+			Connection con = DBConnection.connect();						 
 
-			// displaying HTML table
-			output = "<table border=\"1\"><tr><th>id</th><th>user</th><th>hospital</th><th>doctor</th><th>date</th><th>Update</th><th>Delete</th></tr>";
 			String query = "select * from appointment where id=?";
+			
 			PreparedStatement preparedStmt = con.prepareStatement(query);
-			// binding values
 			preparedStmt.setInt(1, Integer.parseInt(aId));
-			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery(query);
+			
+			ResultSet rs = preparedStmt.executeQuery();
 
-			// iterate through the rows in the result set
 			while (rs.next()) {
-				String id = Integer.toString(rs.getInt("id"));
-				String user = rs.getString("patientId");
-				String hospital = rs.getString("hospital");
-				String doctor = rs.getString("doctor");
-				String date = rs.getString("date");
+			appointment.setId(Integer.parseInt(aId));
+			appointment.setPatientId(rs.getString("patientId").toString());
+			appointment.setHospital(rs.getString("hospital"));
+			appointment.setDoctor(rs.getString("doctor"));
+			appointment.setDate(rs.getString("date"));
+			}
+			
+			// iterate through the rows in the result set
+//			while (rs.next()) {
+//				String id = Integer.toString(rs.getInt("id"));
+//				String user = rs.getString("patientId");
+//				String hospital = rs.getString("hospital");
+//				String doctor = rs.getString("doctor");
+//				String date = rs.getString("date");
+				
 
+//				appointment = (Integer.parseInt(aId), rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5));
+				
 				// Add into the HTML table
-				output += "<tr><td>" + id + "</td>";
-				output += "<td>" + user + "</td>";
-				output += "<td>" + hospital + "</td>";
-				output += "<td>" + doctor + "</td>";
-				output += "<td>" + date + "</td>";
+//				output += "<tr><td>" + id + "</td>";
+//				output += "<td>" + user + "</td>";
+//				output += "<td>" + hospital + "</td>";
+//				output += "<td>" + doctor + "</td>";
+//				output += "<td>" + date + "</td>";
 
 				// buttons
-				output += "<td><input name=\"btnUpdate\" type=\"button\" value=\"Update\" class=\"btn btn-secondary\"></td>"
-						+ "<td><form method=\"post\" action=\"items.jsp\">"
-						+ "<input name=\"btnRemove\" type=\"submit\" value=\"Delete\"class=\"btn btn-danger\">"
-						+ "<input name=\"itemID\" type=\"hidden\" value=\"" + id + "\">" + "</form></td></tr>";
-			}
-			con.close();
+//				output += "<td><input name=\"btnUpdate\" type=\"button\" value=\"Update\" class=\"btn btn-secondary\"></td>"
+//						+ "<td><form method=\"post\" action=\"items.jsp\">"
+//						+ "<input name=\"btnRemove\" type=\"submit\" value=\"Delete\"class=\"btn btn-danger\">"
+//						+ "<input name=\"itemID\" type=\"hidden\" value=\"" + id + "\">" + "</form></td></tr>";
+//			}
+//			con.close();
 			// Complete the HTML table
-			output += "</table>";
+//			output += "</table>";
 		} catch (Exception e) {
-			output = "Error while reading the items.";
+//			output = "Error while reading the items.";
 			System.err.println(e.getMessage());
 		}
-		return output;
+		return appointment;
 	}
 }

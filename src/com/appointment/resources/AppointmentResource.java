@@ -12,15 +12,16 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import com.appointment.service.Appointment;
+import com.appointment.model.AppointmentModel;
+import com.appointment.service.AppointmentService;
 //For JSON
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 @Path("/appointmentSRV")
-public class AppointmentService {
+public class AppointmentResource {
 
-	Appointment appointment = new Appointment();
+	AppointmentService appointmentSRV = new AppointmentService();
 
 	@GET
 	@Path("/Test")
@@ -34,7 +35,7 @@ public class AppointmentService {
 	@Path("/getAllAppointments")
 	@Produces(MediaType.TEXT_HTML)
 	public String readAppointment() {
-		return appointment.readAppointment();
+		return appointmentSRV.readAppointment();
 	}
 
 	// Add Appointment
@@ -44,7 +45,7 @@ public class AppointmentService {
 	@Produces(MediaType.TEXT_PLAIN)
 	public String insertItem(@FormParam("patientId") String patientId, @FormParam("hospital") String hospital,
 			@FormParam("doctor") String doctor, @FormParam("date") String date) {
-		String output = appointment.insertAppointment(patientId, hospital, doctor, date);
+		String output = appointmentSRV.insertAppointment(patientId, hospital, doctor, date);
 		return output;
 	}
 
@@ -60,7 +61,7 @@ public class AppointmentService {
 		String hosId = appointmentObject.get("hosId").getAsString();
 		String docId = appointmentObject.get("docId").getAsString();
 		String date = appointmentObject.get("date").getAsString();
-		String output = appointment.updateAppointment(id, userId, hosId, docId, date);
+		String output = appointmentSRV.updateAppointment(id, userId, hosId, docId, date);
 		return output;
 	}
 
@@ -68,17 +69,17 @@ public class AppointmentService {
 	@DELETE
 	@Path("/removeAppointment/{id}")
 	public String deleteAppointment(@PathParam("id") String id) {
-		String output = appointment.deleteAppointment(id);
+		String output = appointmentSRV.deleteAppointment(id);
 		return output;
 	}
 
 	// Get Appointment By Id
 	@GET
 	@Path("/getAppointmentById/{id}")
-	@Produces(MediaType.TEXT_HTML)
-	public String getAppointmentById(@PathParam("id")String aId) {
-		String output = appointment.getAppointmentById(aId);
-		return output;
+	@Produces(MediaType.APPLICATION_JSON)
+	public AppointmentModel getAppointmentById(@PathParam("id")String id) {
+		AppointmentModel appointment = appointmentSRV.getAppointmentById(id);
+		return appointment;
 	}
 
 }

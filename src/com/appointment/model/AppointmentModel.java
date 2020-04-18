@@ -3,7 +3,7 @@ package com.appointment.model;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
-public class Appointment {
+public class AppointmentModel {
 
 
 	private Integer id;
@@ -13,12 +13,12 @@ public class Appointment {
 	private String date;
 
 	
-	public Appointment() {
-		super();
+	public AppointmentModel() {
+	
 	}
 
 	
-	public Appointment(Integer id, String patientId, String hospital, String doctor, String date) {
+	public AppointmentModel(Integer id, String patientId, String hospital, String doctor, String date) {
 		super();
 		this.id = id;
 		this.patientId = patientId;
@@ -29,13 +29,13 @@ public class Appointment {
 
 
 
-	public Integer getID() {
+	public Integer getId() {
 		return id;
 	}
 
 
-	public void setID(Integer iD) {
-		id = iD;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 

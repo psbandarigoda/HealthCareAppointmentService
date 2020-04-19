@@ -1,5 +1,8 @@
 package com.appointment.model;
 
+
+import java.util.Date;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
@@ -10,7 +13,7 @@ public class AppointmentModel {
 	private String patientId;
 	private String hospital;
 	private String doctor;
-	private String date;
+	private Date date;
 
 	
 	public AppointmentModel() {
@@ -18,7 +21,7 @@ public class AppointmentModel {
 	}
 
 	
-	public AppointmentModel(Integer id, String patientId, String hospital, String doctor, String date) {
+	public AppointmentModel(Integer id, String patientId, String hospital, String doctor, Date date) {
 		super();
 		this.id = id;
 		this.patientId = patientId;
@@ -69,12 +72,12 @@ public class AppointmentModel {
 	}
 
 
-	public String getDate() {
+	public Date getDate() {
 		return date;
 	}
 
 
-	public void setDate(String date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 

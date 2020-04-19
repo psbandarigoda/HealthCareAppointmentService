@@ -9,7 +9,7 @@ public class AppointmentService {
 	
 
 	// Insert method which insert data to Appointment table
-	public String insertAppointment(String patientId, String hospital, String doctor, String date) {
+	public String insertAppointment(String patientId, String hospital, String doctor, Date date) {
 		String output = "";
 		try {
 			Connection con = DBConnection.connect();
@@ -24,7 +24,7 @@ public class AppointmentService {
 			preparedStmt.setString(2, patientId);
 			preparedStmt.setString(3, hospital);
 			preparedStmt.setString(4, doctor);
-			preparedStmt.setString(5, date);
+			preparedStmt.setDate(5, date);
 
 			preparedStmt.execute();
 			con.close();
@@ -156,8 +156,8 @@ public class AppointmentService {
 			appointment.setPatientId(rs.getString("patientId").toString());
 			appointment.setHospital(rs.getString("hospital"));
 			appointment.setDoctor(rs.getString("doctor"));
-			appointment.setDate(rs.getString("date"));
-			}
+			java.util.Date utilDate = rs.getDate("date");
+			appointment.setDate(utilDate);			}
 			
 			// iterate through the rows in the result set
 //			while (rs.next()) {
@@ -215,8 +215,8 @@ public class AppointmentService {
 			appointment.setPatientId(rs.getString("patientId"));
 			appointment.setHospital(hospital);
 			appointment.setDoctor(rs.getString("doctor"));
-			appointment.setDate(rs.getString("date"));
-			}
+			java.util.Date utilDate = rs.getDate("date");
+			appointment.setDate(utilDate);			}
 			
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
@@ -245,8 +245,12 @@ public class AppointmentService {
 			appointment.setPatientId(rs.getString("patientId"));
 			appointment.setHospital(rs.getString("hospital"));
 			appointment.setDoctor(doctor);
-			appointment.setDate(rs.getString("date"));
+			java.util.Date utilDate = rs.getDate("date");
+			appointment.setDate(utilDate);
+
 			}
+			
+			
 			
 		} catch (Exception e) {
 			System.err.println(e.getMessage());

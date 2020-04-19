@@ -3,7 +3,7 @@ CREATE TABLE `appointment` (
   `patientId` varchar(6) DEFAULT NULL,
   `hospital` varchar(6) DEFAULT NULL,
   `doctor` varchar(12) DEFAULT NULL,
-  `date` varchar(25) DEFAULT NULL,
+  `date` Date DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -13,6 +13,6 @@ CREATE TABLE `rm_appointment` (
   `patientId` varchar(6) DEFAULT NULL,
   `hospital` varchar(6) DEFAULT NULL,
   `doctor` varchar(12) DEFAULT NULL,
-  `date` varchar(25) DEFAULT NULL,
+  `date` Date DEFAULT NULL,
   PRIMARY KEY (`id`)
 );

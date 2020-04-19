@@ -1,5 +1,7 @@
 package com.appointment.resources;
 
+import java.sql.Date;
+
 //For REST Service
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -44,7 +46,7 @@ public class AppointmentResource {
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.TEXT_PLAIN)
 	public String insertItem(@FormParam("patientId") String patientId, @FormParam("hospital") String hospital,
-			@FormParam("doctor") String doctor, @FormParam("date") String date) {
+			@FormParam("doctor") String doctor, @FormParam("date") Date date) {
 		String output = appointmentSRV.insertAppointment(patientId, hospital, doctor, date);
 		return output;
 	}

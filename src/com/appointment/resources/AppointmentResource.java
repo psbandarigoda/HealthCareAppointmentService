@@ -81,5 +81,14 @@ public class AppointmentResource {
 		AppointmentModel appointment = appointmentSRV.getAppointmentById(id);
 		return appointment;
 	}
+	
+	// Get Appointment By Hospital
+	@GET
+	@Path("/getAppointmentByHos/{hospital}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public AppointmentModel getAppointmentByHos(@PathParam("hospital")String hospital) {
+		AppointmentModel appointment = appointmentSRV.getAppointmentByHos(hospital);
+		return appointment;
+	}
 
 }

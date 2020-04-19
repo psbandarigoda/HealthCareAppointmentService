@@ -192,4 +192,37 @@ public class AppointmentService {
 		}
 		return appointment;
 	}
+	
+	
+	
+	// Get Appointment data by Hospital
+	public AppointmentModel getAppointmentByHos(String hospital) {
+		
+		AppointmentModel appointment = new AppointmentModel();
+		
+		try {
+			Connection con = DBConnection.connect();						 
+
+			String query = "select * from appointment where hospital=?";
+			
+			PreparedStatement preparedStmt = con.prepareStatement(query);
+			preparedStmt.setString(1, hospital);
+			
+			ResultSet rs = preparedStmt.executeQuery();
+
+			while (rs.next()) {
+			appointment.setId(Integer.parseInt(rs.getString("id")));
+			appointment.setPatientId(rs.getString("patientId"));
+			appointment.setHospital(hospital);
+			appointment.setDoctor(rs.getString("doctor"));
+			appointment.setDate(rs.getString("date"));
+			}
+			
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+		return appointment;
+	}
+
+	
 }

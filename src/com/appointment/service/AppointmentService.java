@@ -223,6 +223,36 @@ public class AppointmentService {
 		}
 		return appointment;
 	}
+	
+	
+	// Get Appointment data by Doctor
+	public AppointmentModel getAppointmentByDoc(String doctor) {
+		
+		AppointmentModel appointment = new AppointmentModel();
+		
+		try {
+			Connection con = DBConnection.connect();						 
+
+			String query = "select * from appointment where doctor=?";
+			
+			PreparedStatement preparedStmt = con.prepareStatement(query);
+			preparedStmt.setString(1, doctor);
+			
+			ResultSet rs = preparedStmt.executeQuery();
+
+			while (rs.next()) {
+			appointment.setId(Integer.parseInt(rs.getString("id")));
+			appointment.setPatientId(rs.getString("patientId"));
+			appointment.setHospital(rs.getString("hospital"));
+			appointment.setDoctor(doctor);
+			appointment.setDate(rs.getString("date"));
+			}
+			
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+		return appointment;
+	}
 
 	
 }

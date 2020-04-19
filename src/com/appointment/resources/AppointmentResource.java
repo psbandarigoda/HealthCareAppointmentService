@@ -90,5 +90,14 @@ public class AppointmentResource {
 		AppointmentModel appointment = appointmentSRV.getAppointmentByHos(hospital);
 		return appointment;
 	}
+	
+	// Get Appointment By Doctor
+	@GET
+	@Path("/getAppointmentByDoc/{doctor}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public AppointmentModel getAppointmentByDoc(@PathParam("doctor")String doctor) {
+		AppointmentModel appointment = appointmentSRV.getAppointmentByDoc(doctor);
+		return appointment;
+	}
 
 }

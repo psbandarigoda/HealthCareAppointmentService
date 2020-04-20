@@ -208,35 +208,8 @@ public class AppointmentService {
 				java.util.Date utilDate = rs.getDate("date");
 				appointment.setDate(utilDate);
 			}
-
-			// iterate through the rows in the result set
-//			while (rs.next()) {
-//				String id = Integer.toString(rs.getInt("id"));
-//				String user = rs.getString("patientId");
-//				String hospital = rs.getString("hospital");
-//				String doctor = rs.getString("doctor");
-//				String date = rs.getString("date");
-
-//				appointment = (Integer.parseInt(aId), rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5));
-
-			// Add into the HTML table
-//				output += "<tr><td>" + id + "</td>";
-//				output += "<td>" + user + "</td>";
-//				output += "<td>" + hospital + "</td>";
-//				output += "<td>" + doctor + "</td>";
-//				output += "<td>" + date + "</td>";
-
-			// buttons
-//				output += "<td><input name=\"btnUpdate\" type=\"button\" value=\"Update\" class=\"btn btn-secondary\"></td>"
-//						+ "<td><form method=\"post\" action=\"items.jsp\">"
-//						+ "<input name=\"btnRemove\" type=\"submit\" value=\"Delete\"class=\"btn btn-danger\">"
-//						+ "<input name=\"itemID\" type=\"hidden\" value=\"" + id + "\">" + "</form></td></tr>";
-//			}
 			con.close();
-			// Complete the HTML table
-//			output += "</table>";
 		} catch (Exception e) {
-//			output = "Error while reading the items.";
 			System.err.println(e.getMessage());
 		}
 		return appointment;
@@ -302,5 +275,37 @@ public class AppointmentService {
 		}
 		return appointment;
 	}
+	
+	// Get Appointment data by Date
+	public AppointmentModel getAppointmentByDate(Date date) {
 
+		AppointmentModel appointment = new AppointmentModel();
+
+		try {
+			Connection con = DBConnection.connect();
+
+			String query = "select * from appointment where date=?";
+
+			PreparedStatement preparedStmt = con.prepareStatement(query);
+			preparedStmt.setDate(1, date);
+
+			ResultSet rs = preparedStmt.executeQuery();
+
+			while (rs.next()) {
+				appointment.setId(Integer.parseInt(rs.getString("id")));
+				appointment.setPatientId(rs.getString("patientId"));
+				appointment.setHospital(rs.getString("hospital"));
+				appointment.setDoctor(rs.getString("doctor"));
+				java.util.Date utilDate = date;
+				appointment.setDate(utilDate);
+
+			}
+
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+		return appointment;
+	}
+
+	
 }

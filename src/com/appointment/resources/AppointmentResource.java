@@ -101,5 +101,14 @@ public class AppointmentResource {
 		AppointmentModel appointment = appointmentSRV.getAppointmentByDoc(doctor);
 		return appointment;
 	}
+	
+	// Get Appointment By Date
+	@GET
+	@Path("/getAppointmentByDate/{date}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public AppointmentModel getAppointmentByDoc(@PathParam("date")Date date) {
+		AppointmentModel appointment = appointmentSRV.getAppointmentByDate(date);
+		return appointment;
+	}
 
 }
